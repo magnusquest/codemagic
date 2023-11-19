@@ -15,7 +15,7 @@ const shapeUtils = [ResponseShapeUtil]
 
 export default function App() {
 	return (
-		<div className="editor">
+		<div className="editor bg-slate-500">
 			<Tldraw
 				persistenceKey="make-real"
 				shareZone={<MakeRealButton />}
