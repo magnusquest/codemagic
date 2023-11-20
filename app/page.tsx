@@ -16,7 +16,9 @@ const shapeUtils = [ResponseShapeUtil]
 
 export default function App() {
 	return (
-		<LandingPage />
+		<div className="flex flex-col min-h-screen bg-white dark:bg-zinc-900">
+			<LandingPage />
+		</div>
 		// <div className="editor">
 		// 	<Tldraw persistenceKey="make-real" shareZone={<MakeRealButton />} shapeUtils={shapeUtils}>
 		// 		<TldrawLogo />
