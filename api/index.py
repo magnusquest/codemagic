@@ -1,20 +1,24 @@
 from fastapi import FastAPI
 from autogen import config_list_from_json
 import autogen
+from pydantic import BaseModel
 
-app = FastAPI()
+app = FastAPI(docs_url="/api/docs", openapi_url="/api/openapi.json")
 
+class Message(BaseModel):
+    api_key: str
+    msg: str
 
 @app.get("/api/healthchecker")
 def read_root():
     return {"status": "success", "message": "Integrate FastAPI Framework with Next.js"}
 
 
-# TODO: get api key from user, use to create its own agents for calling
-@app.get("/api/wizard")
-def callAgents(api_key=None):
+# get api key from user, use to create its own agents for calling
+@app.post("/api/wizard")
+def callAgents(message: Message):
     # Get api key
-    config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST") # TODO: pass api_key
+    config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST") # pass api_key from user
     llm_config = {"config_list": config_list, "seed": 42, "request_timeout": 120}
 
     # Create user proxy agent, coder, and a product manager
@@ -50,7 +54,9 @@ def callAgents(api_key=None):
     manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=llm_config)
 
     #Build a classic & basic pong game with 2 players in html/javascript using the threejs library
-    msg = "Build a classic & basic pong game with 2 players in html/javascript using the threejs library"
+    # TODO: pass msg from user
+    #msg = "Build a classic & basic pong game with 2 players in html/javascript using the threejs library"
+    msg = message.msg
     #msg = input("Type your prompt idea for a program here:")
 
     # Start the conversation
