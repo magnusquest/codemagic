@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from autogen import config_list_from_json
 import autogen
 from pydantic import BaseModel
+import json
 
 app = FastAPI(docs_url="/api/docs", openapi_url="/api/openapi.json")
 
@@ -25,7 +26,7 @@ def callAgents(message: Message):
     user_proxy = autogen.UserProxyAgent(
         name="User_proxy",
         system_message="A human admin who will give the idea and run the code provided by the Designer and then the coder.",
-        code_execution_config={"last_n_messages": 2, "work_dir": "groupchat"},
+        code_execution_config={"last_n_messages": 2, "work_dir": "coding"},
         human_input_mode="ALWAYS",
     )
 
@@ -60,6 +61,9 @@ def callAgents(message: Message):
     #msg = input("Type your prompt idea for a program here:")
 
     # Start the conversation
+    #TODO: return the conversation
     user_proxy.initiate_chat(
         manager, message=msg
     )
+
+    return json.dumps(user_proxy.chat_messages)
