@@ -19,10 +19,10 @@ export default function App() {
 		<div className="flex flex-col min-h-screen bg-white dark:bg-zinc-900">
 			<LandingPage />
 		</div>
-		// <div className="editor">
+		// <div className="fixed inset-0 overflow-hidden">
 		// 	<Tldraw persistenceKey="make-real" shareZone={<MakeRealButton />} shapeUtils={shapeUtils}>
 		// 		<TldrawLogo />
-		// 		{/* <RiskyButCoolAPIKeyInput /> */}
+		// 		<RiskyButCoolAPIKeyInput />
 		// 	</Tldraw>
 		// </div>
 	)

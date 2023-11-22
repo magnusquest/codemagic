@@ -1,7 +1,39 @@
+'use client'
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { makeReal } from '../makeReal'
+
 
 export default function Dashboard() {
+
+	const [prompt, setPrompt] = useState('')
+	const [html, setHtml] = useState('')
+	const [loading, setLoading] = useState(false);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		console.log(e.target.value)
+		setPrompt(e.target.value)
+		// call makeReal with prompt
+
+	}
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		console.log('submit')
+		console.log(prompt)
+		setLoading(true);
+		makeReal(prompt, "").then((res) => {
+			console.log(res);
+			setHtml(res);
+		}).catch((err) => {
+			console.log(err);
+		}).finally(() => {
+			setLoading(false);
+		});
+	}
+
 	return (
 		<>
 			<div className="flex h-screen">
@@ -35,6 +67,19 @@ export default function Dashboard() {
 					<p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
 						Manage your full-stack development process here.
 					</p>
+					<form onSubmit={handleSubmit}>
+						<div className="flex flex-col">
+							<label>Input full stack prompt:</label>
+							<textarea rows={4} cols={40} className="border border-black w-36" defaultValue={''} onChange={e => setPrompt(e.target.value)}/>
+						</div>
+						<button type="submit" className="mt-5 p-5 bg-blue-500 rounded-lg">Submit</button>
+					</form>
+					<label>OpenAI Key: </label>
+					<input id="openai_key_risky_but_cool" className="mt-5 border border-black" defaultValue="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" />
+					<section className="mt-5">
+						{loading ? <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div> : null}
+						<div dangerouslySetInnerHTML={{__html: html}}></div>
+					</section>
 				</main>
 			</div>
 		</>
