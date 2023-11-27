@@ -13,15 +13,7 @@ export default function LandingPage() {
 				<p className="mt-2 text-lg text-zinc-500 dark:text-zinc-400 md:text-xl">
 					With the power of AI, we automate the complete development process for you.
 				</p>
-				<Button
-					className="mt-6 w-full max-w-[14rem] mx-auto"
-					variant="default"
-					onClick={() => {
-						router.push('/dashboard')
-					}}
-				>
-					Get Started
-				</Button>
+				<Link className="mt-6 w-full max-w-[14rem] mx-auto rounded-md bg-primary text-white px-4 py-2 font-medium hover:bg-primary/90" href="/dashboard">Get Started</Link>
 			</main>
 		</>
 	)
