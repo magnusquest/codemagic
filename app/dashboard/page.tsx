@@ -4,13 +4,26 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import { makeReal } from '../makeReal'
+import { useEffect } from 'react'
+
+import InnerHTML from 'dangerously-set-html-content';
 
 
 export default function Dashboard() {
 
 	const [prompt, setPrompt] = useState('')
-	const [html, setHtml] = useState('')
+	const [html, setHtml] = useState('<div>Site content will appear here</div>')
 	const [loading, setLoading] = useState(false);
+	const [contentLoaded, setContentLoaded] = useState(false);
+
+	useEffect(() => {
+		console.log(html);
+		setTimeout(() => {
+			console.log('setting html')
+			setHtml('<div>Sample</div>')
+			console.log(html);
+		}, 3000)
+	}, []);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		console.log(e.target.value)
@@ -24,9 +37,12 @@ export default function Dashboard() {
 		console.log('submit')
 		console.log(prompt)
 		setLoading(true);
+		setContentLoaded(false);
+		setHtml('<div></div>'); // clear html
 		makeReal(prompt, "").then((res) => {
 			console.log(res);
 			setHtml(res);
+			setContentLoaded(true);
 		}).catch((err) => {
 			console.log(err);
 		}).finally(() => {
@@ -78,7 +94,8 @@ export default function Dashboard() {
 					<input id="openai_key_risky_but_cool" className="mt-5 border border-black" defaultValue="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" />
 					<section className="mt-5">
 						{loading ? <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div> : null}
-						<div dangerouslySetInnerHTML={{__html: html}}></div>
+						{/* <div dangerouslySetInnerHTML={{__html: html}}></div> */}
+						{contentLoaded ? <InnerHTML html={html} /> : <div>Site content will appear here</div> }
 					</section>
 				</main>
 			</div>
