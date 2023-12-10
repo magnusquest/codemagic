@@ -95,7 +95,7 @@ export default function Dashboard() {
 					<section className="mt-5">
 						{loading ? <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div> : null}
 						{/* <div dangerouslySetInnerHTML={{__html: html}}></div> */}
-						{contentLoaded ? <InnerHTML html={html} /> : <div>Site content will appear here</div> }
+						{contentLoaded ? <div className="border border-purple-400 p-5"><InnerHTML html={html} /></div> : <div>Site content will appear here</div> }
 					</section>
 				</main>
 			</div>
