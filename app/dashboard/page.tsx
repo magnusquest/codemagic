@@ -91,7 +91,7 @@ export default function Dashboard() {
 						<button type="submit" className="mt-5 p-5 bg-blue-500 rounded-lg">Submit</button>
 					</form>
 					<label>OpenAI Key: </label>
-					<input id="openai_key_risky_but_cool" className="mt-5 border border-black" defaultValue="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" />
+					<input id="openai_key_risky_but_cool" className="mt-5 border border-black" defaultValue="" />
 					<section className="mt-5">
 						{loading ? <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div> : null}
 						{/* <div dangerouslySetInnerHTML={{__html: html}}></div> */}
